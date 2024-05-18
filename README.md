@@ -16,7 +16,7 @@
 
 **Verify Installation**
 
-`  go version `
+`go version `
 
 ### References
 ` https://golang.org/dl/ `
