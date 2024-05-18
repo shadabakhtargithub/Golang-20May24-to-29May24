@@ -10,6 +10,10 @@ Golang Intermediate Level Course
 
 **Set Environment Variables**
 
+` export GOPATH=$HOME/go `
+
+`export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin`
+
 ### References
 ` https://golang.org/dl/ `
 
