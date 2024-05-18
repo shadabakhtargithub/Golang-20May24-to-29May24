@@ -7,6 +7,8 @@ Golang Intermediate Level Course
 
 `tar -C /usr/local -xzf go1.22.3.linux-amd64.tar.gz `
 
+**Set Environment Variables**
+
 ### References
 ` https://golang.org/dl/ `
 
