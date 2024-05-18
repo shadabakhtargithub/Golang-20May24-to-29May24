@@ -14,6 +14,10 @@
 
 `export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin`
 
+**Verify Installation**
+
+`  go version `
+
 ### References
 ` https://golang.org/dl/ `
 
