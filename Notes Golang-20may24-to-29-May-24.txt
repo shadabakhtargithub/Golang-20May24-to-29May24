@@ -1,0 +1,171 @@
+*************************************************************************************************************************************************
+						***** Notes Golang-20May24-to-29May24 ***** 
+*************************************************************************************************************************************************
+Golang-Session-1 | 20-05-2024 | Monday
+====================================
+Which Golang version you are using ?
+---
+go version go1.21.1 windows/amd64
+
+Powershell:
+----------------
+cd d:
+
+cd <folder>
+
+code .
+
+Installationa and Configuration on Azure Cloud:
+==========================================
+https://azure.microsoft.com/en-in/get-started/azure-portal
+
+Useruser: azureuser
+Key: Private Key
+
+MacOS/Linux
+============
+ssh -i key.pem azureuser@Public-IP-Address/Public-DNS-Name
+
+Port:
+-------
+22
+
+https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+---
+putty.exe : connecting with laptop to cloud VM
+
+puttygen.exe: convert .pem to ppk
+
+pageant.exe: add your key in pageant
+
+Working with Azure Ubuntu VM:
+==============================
+azureuser@Developer1:~$ cat /etc/os-release
+NAME="Ubuntu"
+VERSION="20.04.6 LTS (Focal Fossa)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 20.04.6 LTS"
+VERSION_ID="20.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=focal
+UBUNTU_CODENAME=focal
+
+wget https://go.dev/dl/go1.22.3.linux-amd64.tar.gz 
+
+tar -C /usr/local -xzf go1.22.3.linux-amd64.tar.gz
+
+azureuser@Developer1:~$ sudo tar -C /usr/local -xzf go1.22.3.linux-amd64.tar.gz
+azureuser@Developer1:~$ export GOPATH=$HOME/go
+azureuser@Developer1:~$ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+azureuser@Developer1:~$ ls -a
+.  ..  .bash_logout  .bashrc  .cache  .profile  .ssh  .sudo_as_admin_successful  .wget-hsts  go1.22.3.linux-amd64.tar.gz
+
+
+azureuser@Developer1:~$ go version
+go version go1.22.3 linux/amd64
+
+azureuser@Developer1:~$ ls
+go1.22.3.linux-amd64.tar.gz
+
+azureuser@Developer1:~$ vim hello.go
+
+azureuser@Developer1:~$ ls
+go1.22.3.linux-amd64.tar.gz  hello.go
+
+azureuser@Developer1:~$ go run hello.go
+Welcome to Goazureuser@Developer1:~$
+
+azureuser@Developer1:~$ go build hello.go
+azureuser@Developer1:~$ ls
+go1.22.3.linux-amd64.tar.gz  hello  hello.go
+azureuser@Developer1:~$ ll
+total 69252
+drwxr-xr-x 4 azureuser azureuser     4096 May 20 06:53 ./
+drwxr-xr-x 3 root      root          4096 May 20 06:34 ../
+-rw-r--r-- 1 azureuser azureuser      220 Feb 25  2020 .bash_logout
+-rw-r--r-- 1 azureuser azureuser     3771 Feb 25  2020 .bashrc
+drwx------ 3 azureuser azureuser     4096 May 20 06:53 .cache/
+-rw-r--r-- 1 azureuser azureuser      807 Feb 25  2020 .profile
+drwx------ 2 azureuser azureuser     4096 May 20 06:34 .ssh/
+-rw-r--r-- 1 azureuser azureuser        0 May 20 06:50 .sudo_as_admin_successful
+-rw------- 1 azureuser azureuser      791 May 20 06:53 .viminfo
+-rw-rw-r-- 1 azureuser azureuser      161 May 20 06:47 .wget-hsts
+-rw-rw-r-- 1 azureuser azureuser 68958945 May  7 16:01 go1.22.3.linux-amd64.tar.gz
+-rwxrwxr-x 1 azureuser azureuser  1910598 May 20 06:53 hello*
+-rw-rw-r-- 1 azureuser azureuser       71 May 20 06:53 hello.go
+
+azureuser@Developer1:~$ ls
+
+go1.22.3.linux-amd64.tar.gz  hello  hello.go
+
+azureuser@Developer1:~$ ls -l hello.go
+-rw-rw-r-- 1 azureuser azureuser 71 May 20 06:53 hello.go
+
+azureuser@Developer1:~$ ll hello
+-rwxrwxr-x 1 azureuser azureuser 1910598 May 20 06:53 hello*
+
+
+
+azureuser@Developer1:~$ go help
+Go is a tool for managing Go source code.
+
+Usage:
+
+        go <command> [arguments]
+
+The commands are:
+
+        bug         start a bug report
+        build       compile packages and dependencies
+        clean       remove object files and cached files
+        doc         show documentation for package or symbol
+        env         print Go environment information
+        fix         update packages to use new APIs
+        fmt         gofmt (reformat) package sources
+        generate    generate Go files by processing source
+        get         add dependencies to current module and install them
+        install     compile and install packages and dependencies
+        list        list packages or modules
+        mod         module maintenance
+        work        workspace maintenance
+        run         compile and run Go program
+        test        test packages
+        tool        run specified go tool
+        version     print Go version
+        vet         report likely mistakes in packages
+
+Use "go help <command>" for more information about a command.
+
+Additional help topics:
+
+        buildconstraint build constraints
+        buildmode       build modes
+        c               calling between Go and C
+        cache           build and test caching
+        environment     environment variables
+        filetype        file types
+        go.mod          the go.mod file
+        gopath          GOPATH environment variable
+        goproxy         module proxy protocol
+        importpath      import path syntax
+        modules         modules, module versions, and more
+        module-auth     module authentication using go.sum
+        packages        package lists and patterns
+        private         configuration for downloading non-public code
+        testflag        testing flags
+        testfunc        testing functions
+        vcs             controlling version control with GOVCS
+
+Use "go help <topic>" for more information about that topic.
+
+
+
+
+
+
+
+
