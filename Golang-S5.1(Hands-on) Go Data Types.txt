@@ -1,0 +1,79 @@
+*************************************************************************************************************************************************
+					***** Golang-S5.1(Hands-on) Go Data Types ***** 
+*************************************************************************************************************************************************
+// Using String Data Types
+
+package main
+
+import "fmt"
+
+const loginToken string = "Akhtar"
+
+func main() {
+	// String Data Type
+	var username string = "Shadab"
+	fmt.Println(username)
+	fmt.Printf("Variables Type is: %T \n", username)
+
+	// Boolean Data Type
+	var isloggedin bool = true
+	fmt.Println(isloggedin)
+	fmt.Printf("Variables Type is: %T \n", isloggedin)
+
+	// uint8 Data Type
+	var smallValue uint8 = 255
+	fmt.Println(smallValue)
+	fmt.Printf("Variables Type is: %T \n", smallValue)
+
+	// float32 Data Type
+	var smallValueFloat float32 = 255.3273839736837837
+	fmt.Println(smallValueFloat)
+	fmt.Printf("Variables Type is: %T \n", smallValueFloat)
+
+	// float64 Data Type
+	var bigValueFloat float64 = 255.3273839736837837
+	fmt.Println(bigValueFloat)
+	fmt.Printf("Variables Type is: %T \n", bigValueFloat)
+
+	// Default values and some aliases
+	var anotherVariable int
+	fmt.Println(anotherVariable)
+	fmt.Printf("Variables Type is: %T \n", anotherVariable)
+
+	var anotherVariableString string
+	fmt.Println(anotherVariableString)
+	fmt.Printf("Variables Type is: %T \n", anotherVariableString)
+
+	// implicit Type
+	var website = "skillwise.com"
+	fmt.Println(website)
+	fmt.Printf("Variables Type is: %T \n", website)
+
+	// no var keyword declaration
+	totalUsers := 49736
+	fmt.Println(totalUsers)
+	fmt.Printf("Variables Type is: %T \n", totalUsers)
+
+	fmt.Println(loginToken)
+	fmt.Printf("Variables Type is: %T \n", loginToken)
+
+}
+
+
+Issue: 
+----------
+Please give me solution for this error "go: malformed module path ".\\main.go": invalid char '\\'"
+
+Solution:
+-------------
+PS D:\go-exercise-files-2023\05DataTypes> go mod init .\main.go
+go: malformed module path ".\\main.go": invalid char '\\'
+
+Please do not use ".\" in command "go mod init .\main.go"
+
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

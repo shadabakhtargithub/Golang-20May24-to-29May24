@@ -1,0 +1,130 @@
+************************************************************************************************************************************************
+					***** Golang-S8.2(Hands-on) Slice in Golang ***** 
+************************************************************************************************************************************************
+//
+package main
+
+import "fmt"
+
+func main() {
+	array := [5]int{11, 12, 13, 14, 15}
+                   // The first index position in a slice is always 0 and the last one will be (length of slice – 1).
+	slice := array[1:4] 
+
+	fmt.Println("Array: ", array)
+	fmt.Println("Slice: ", slice)
+}
+
+Output:
+-------------
+> go run .\01ArraywithSlice.go
+Array:  [11 12 13 14 15]
+Slice:  [12 13 14]
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Here’s an example that demonstrates how to add elements to a slice in Go
+
+package main
+
+import "fmt"
+
+func main() {
+	slice := []int{1, 2, 3}
+	slice = append(slice, 4, 5, 6)
+
+	fmt.Println("Slice: ", slice)
+}
+
+Output:
+-------------
+> go run .\02SliceWithAppend.go
+Slice:  [1 2 3 4 5 6]
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+A slice contains three components:
+----------------------------------------------------
+Pointer: The pointer is used to points to the first element of the array that is accessible through the slice. Here, it is not necessary that the pointed element is the first 
+element of the array.
+
+Length: The length is the total number of elements present in the array.
+
+Capacity: The capacity represents the maximum size upto which it can expand.
+
+Let us discuss all these components with the help of an example:
+
+Example: 
+
+// Golang program to illustrate
+// the working of the slice components
+package main
+ 
+import "fmt"
+ 
+func main() {
+ 
+    // Creating an array
+    arr := [7]string{"This", "is", "the", "tutorial",
+                         "of", "Go", "language"}
+ 
+    // Display array
+    fmt.Println("Array:", arr)
+ 
+    // Creating a slice
+    myslice := arr[1:6]
+ 
+    // Display slice
+    fmt.Println("Slice:", myslice)
+ 
+    // Display length of the slice
+    fmt.Printf("Length of the slice: %d", len(myslice))
+ 
+    // Display the capacity of the slice
+    fmt.Printf("\nCapacity of the slice: %d", cap(myslice))
+}
+
+Output: 
+------------
+Array: [This is the tutorial of Go language]
+Slice: [is the tutorial of Go]
+Length of the slice: 5
+Capacity of the slice: 6
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Go program that demonstrates the creation and manipulation of slices
+// This program creates a slice, appends elements to it, modifies elements, and prints the slice's contents
+
+package main
+
+import "fmt"
+
+func main() {
+    // Create an empty slice of integers
+    var numbers []int
+
+    // Append elements to the slice
+    numbers = append(numbers, 1)
+    numbers = append(numbers, 2)
+    numbers = append(numbers, 3)
+
+    // Modify an element in the slice
+    numbers[1] = 42
+
+    // Print the slice's length, capacity, and contents
+    fmt.Printf("Length: %d, Capacity: %d\n", len(numbers), cap(numbers))
+    fmt.Println("Slice contents:", numbers)
+
+    // Create a slice from an array
+    arr := [5]int{5, 4, 3, 2, 1}
+    sliced := arr[1:4]
+
+    // Print the sliced array
+    fmt.Println("Sliced array:", sliced)
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Output:
+--------------
+Length: 3, Capacity: 4
+Slice contents: [1 42 3]
+Sliced array: [4 3 2]
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

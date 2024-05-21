@@ -1,0 +1,33 @@
+************************************************************************************************************************************************
+					***** Golang-S5.3(Hands-on) User Input ***** 
+************************************************************************************************************************************************
+// User Input Program
+
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
+
+func main() {
+	fmt.Println("Input Varialbe:")
+	reader := bufio.NewReader(os.Stdin)
+
+	// comma ok // comma err
+	fmt.Println("Enter the rating for travel")
+	input, _ := reader.ReadString('\n')
+
+	fmt.Println("Thanks for rating, ", input)
+
+}
+
+Output:
+------------
+> go run .\01BufIO.go
+Input Varialbe:
+Enter the rating for travel
+4
+Thanks for rating,  4
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

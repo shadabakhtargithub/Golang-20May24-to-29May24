@@ -1,0 +1,48 @@
+************************************************************************************************************************************************
+						***** Golang-S6.2(Hands-on) Loops in Go Programming ***** 
+************************************************************************************************************************************************
+4. **For-Range Loop**
+------------------------------------
+Go provides a convenient way to iterate over elements of an array, slice, map, or string using the `range` keyword.
+
+   package main
+
+   import "fmt"
+
+   func main() {
+       numbers := []int{1, 2, 3, 4, 5}
+       for index, value := range numbers {
+           fmt.Printf("Index: %d, Value: %d\n", index, value)
+       }
+   }
+
+
+package main: This line declares that this Go file is part of the main package, which is required for creating executable programs in Go.
+
+import "fmt": This line imports the "fmt" package, which provides functions for formatted input and output. In this program, it's used to print data to the console.
+
+func main() {: This is the entry point of the program, where the execution begins.
+
+numbers := []int{1, 2, 3, 4, 5}: This line declares a slice of integers named numbers and initializes it with the values 1, 2, 3, 4, and 5. A slice is a dynamic, flexible-sized view of an array.
+
+for index, value := range numbers {: This is the start of a for loop. It uses the range keyword to iterate over each element in the numbers slice. During each iteration, two values are assigned:
+
+index: This variable holds the index (position) of the current element in the slice.
+value: This variable holds the value of the current element in the slice.
+fmt.Printf("Index: %d, Value: %d\n", index, value): Inside the loop, this line uses the fmt.Printf function to print a formatted string to the console. It displays both the index and value of the current element. The placeholders %d are replaced with the values of index and value.
+
+}: This curly brace marks the end of the for loop.
+
+}: This curly brace marks the end of the main function.
+
+When you run this program, it will produce the following output:
+
+plaintext
+Copy code
+Index: 0, Value: 1
+Index: 1, Value: 2
+Index: 2, Value: 3
+Index: 3, Value: 4
+Index: 4, Value: 5
+
+The for loop with range is a convenient way to iterate over elements in a collection, such as a slice or array, and process each element as needed. In this program, it allows you to iterate over the numbers slice and print both the index and value of each element.
