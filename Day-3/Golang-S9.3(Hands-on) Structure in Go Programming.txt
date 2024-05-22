@@ -1,0 +1,320 @@
+************************************************************************************************************************************************
+					***** Golang-S9.3(Hands-on) Structure in Go Programming ***** 
+************************************************************************************************************************************************
+01
+-----
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Working with Structure in Go")
+	// No Classess  in Golang
+	// No Inheritance in Golang
+	shadab := User{"Shadab", "shadabakhtar@go.dev", true, 37}
+	fmt.Println(shadab)
+
+}
+
+type User struct {
+	Name   string
+	Email  string
+	Status bool
+	Age    int
+}
+
+Output:
+------------
+Working with Structure in Go
+{Shadab shadabakhtar@go.dev true 37}
+
+
+Note:
+---------
+shadab := User{...}: This line of code declares a new variable named shadab and initializes it with a value of the User struct type
+
+User{...}: This is a struct literal, which is used to create a new instance of a struct. In this case, it creates an instance of the User struct
+
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+02
+----
+package main
+
+import "fmt"
+
+// Define a User struct
+type User struct {
+    Name       string
+    Email      string
+    Subscribed bool
+    Age        int
+}
+
+func main() {
+    // Create an instance of the User struct
+    shadab := User{"Shadab", "shadabakhtar@go.dev", true, 37}
+
+    // Access and print fields
+    fmt.Println("Name:", shadab.Name)
+    fmt.Println("Email:", shadab.Email)
+    fmt.Println("Subscribed:", shadab.Subscribed)
+    fmt.Println("Age:", shadab.Age)
+}
+
+Output:
+-------------
+Name: Shadab
+Email: shadabakhtar@go.dev
+Subscribed: true
+Age: 37
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Basic Structure
+
+//This program defines a simple structure called `Person` to represent a person's name and age.
+
+   package main
+
+   import "fmt"
+
+   // Define a structure 'Person'
+   type Person struct {
+       FirstName string
+       LastName  string
+       Age       int
+   }
+
+   func main() {
+       // Create an instance of 'Person'
+       p := Person{
+           FirstName: "John",
+           LastName:  "Doe",
+           Age:       30,
+       }
+
+       // Access and print fields
+       fmt.Println("First Name:", p.FirstName)
+       fmt.Println("Last Name:", p.LastName)
+       fmt.Println("Age:", p.Age)
+   }
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Struct Method
+
+// This program defines a method associated with a structure to calculate the full name of a person.
+
+// Structure with Function
+
+   package main
+
+   import "fmt"
+
+   // Define a structure 'Person'
+   type Person struct {
+       FirstName string
+       LastName  string
+   }
+
+   // Method to calculate full name
+   func (p Person) FullName() string {
+       return p.FirstName + " " + p.LastName
+   }
+
+   func main() {
+       // Create an instance of 'Person'
+       p := Person{
+           FirstName: "Alice",
+           LastName:  "Smith",
+       }
+
+       // Call the method and print the full name
+       fmt.Println("Full Name:", p.FullName())
+   }
+
+Output:
+-------------
+Full Name: Alice Smith
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Nested Structures
+
+// This program demonstrates nested structures by representing a company with employees.
+
+   package main
+
+   import "fmt"
+
+   // Define a structure 'Employee'
+   type Employee struct {
+       FirstName string
+       LastName  string
+       Age       int
+   }
+
+   // Define a structure 'Company' with a slice of employees
+   type Company struct {
+       Name      string
+       Employees []Employee
+   }
+
+   func main() {
+       // Create instances of 'Employee'
+       emp1 := Employee{"John", "Doe", 30}
+       emp2 := Employee{"Alice", "Smith", 25}
+
+       // Create an instance of 'Company' with employees
+       company := Company{
+           Name:      "Acme Inc",
+           Employees: []Employee{emp1, emp2},
+       }
+
+       // Access and print company name and employee details
+       fmt.Println("Company Name:", company.Name)
+       fmt.Println("Employees:")
+       for _, emp := range company.Employees {
+           fmt.Printf("  %s %s, Age: %d\n", emp.FirstName, emp.LastName, emp.Age)
+       }
+   }
+
+Output:
+---------------
+Company Name: Acme Inc
+Employees:
+  John Doe, Age: 30   
+  Alice Smith, Age: 25
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Nested Structures and with Index
+
+package main
+
+import "fmt"
+
+// Define a structure 'Employee'
+type Employee struct {
+	FirstName string
+	LastName  string
+	Age       int
+}
+
+// Define a structure 'Company' with a slice of employees
+type Company struct {
+	Name      string
+	Employees []Employee
+}
+
+func main() {
+	// Create instances of 'Employee'
+	emp1 := Employee{"John", "Doe", 30}
+	emp2 := Employee{"Alice", "Smith", 25}
+
+	// Create an instance of 'Company' with employees
+	company := Company{
+		Name:      "Acme Inc",
+		Employees: []Employee{emp1, emp2},
+	}
+
+	// Access and print company name and employee details
+	fmt.Println("Company Name:", company.Name)
+	fmt.Println("Employees:")
+	for i, emp := range company.Employees {
+		fmt.Printf("Employee: %d, %s %s, Age: %d\n", i+1, emp.FirstName, emp.LastName, emp.Age)
+	}
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Struct Embedding
+
+// This program demonstrates struct embedding by embedding a `Circle` structure within a `Shape` structure.
+
+   package main
+
+   import (
+       "fmt"
+       "math"
+   )
+
+   // Define a structure 'Circle'
+   type Circle struct {
+       Radius float64
+   }
+
+   // Define a structure 'Shape' embedding 'Circle'
+   type Shape struct {
+       Circle
+   }
+
+   // Method to calculate the area of a shape (a circle in this case)
+   func (s Shape) Area() float64 {
+       return math.Pi * s.Radius * s.Radius
+   }
+
+   func main() {
+       // Create an instance of 'Shape'
+       s := Shape{
+           Circle: Circle{
+               Radius: 5.0,
+           },
+       }
+
+       // Call the method to calculate the area
+       area := s.Area()
+       fmt.Printf("Area of the circle: %.2f\n", area)
+   }
+
+Output:
+-------------
+Area of the circle: 78.54
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// JSON Serialization and Deserialization
+
+// This program demonstrates how to serialize a Go structure to JSON and deserialize it back.
+
+   package main
+
+   import (
+       "encoding/json"
+       "fmt"
+   )
+
+   // Define a structure 'Person'
+   type Person struct {
+       FirstName string `json:"first_name"`
+       LastName  string `json:"last_name"`
+       Age       int    `json:"age"`
+   }
+
+   func main() {
+       // Create an instance of 'Person'
+       p := Person{
+           FirstName: "Alice",
+           LastName:  "Smith",
+           Age:       28,
+       }
+
+       // Serialize 'Person' to JSON
+       jsonData, err := json.Marshal(p)
+       if err != nil {
+           fmt.Println("JSON serialization error:", err)
+           return
+       }
+
+       // Deserialize JSON back to 'Person'
+       var newPerson Person
+       err = json.Unmarshal(jsonData, &newPerson)
+       if err != nil {
+           fmt.Println("JSON deserialization error:", err)
+           return
+       }
+
+       // Print the deserialized 'Person'
+       fmt.Println("Deserialized Person:")
+       fmt.Println("First Name:", newPerson.FirstName)
+       fmt.Println("Last Name:", newPerson.LastName)
+       fmt.Println("Age:", newPerson.Age)
+   }
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+								----- End -----
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
