@@ -1,0 +1,81 @@
+************************************************************************************************************************************************
+					***** Golang-S12.3(Hands-on) Wait Group in Golang ***** 
+************************************************************************************************************************************************
+// Wait Group
+
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"sync"
+)
+
+var wg sync.WaitGroup
+
+func main() {
+	websitelists := []string{
+		"https://www.skillwisegroup.com/",
+		"https://google.com/",
+		"https://github.com/",
+		"https://meta.com/",
+	}
+	for _, web := range websitelists {
+		go getStatusCode(web)
+		wg.Add(1)
+	}
+
+	wg.Wait()
+}
+
+func getStatusCode(endpoint string) {
+
+	defer wg.Done()
+
+	res, err := http.Get(endpoint)
+
+	if err != nil {
+		fmt.Println("Oops in endpoint")
+
+	} else {
+		fmt.Printf("%d status code for %s\n", res.StatusCode, endpoint)
+	}
+}
+
+Descreption:
+--------------------
+In the code you've provided, you're using the `sync.WaitGroup` to perform HTTP requests to multiple websites concurrently and wait for all the requests to complete. 
+
+Here's a breakdown of how this code works:
+1. You start by importing the necessary packages: `"fmt"`, `"net/http"`, and `"sync"`.
+
+2. You define a global `sync.WaitGroup` variable named `wg` to keep track of the number of goroutines you're going to create and wait for.
+
+3. You define a list of website URLs in the `websitelists` slice.
+
+4. You iterate over the `websitelists` slice using a `for` loop, launching a new goroutine for each website. For each website, you call the `getStatusCode` function and 
+    increment the `WaitGroup` counter using `wg.Add(1)` before starting the goroutine.
+
+5. Inside the `getStatusCode` function:
+   - You use a `defer` statement to ensure that `wg.Done()` is called even if there's an error during the HTTP request.
+   - You use `http.Get` to make an HTTP request to the specified website.
+   - If there's an error during the request, you print an error message.
+   - If the request is successful, you print the status code and the URL.
+
+6. In the `main` function, after launching all the goroutines, you call `wg.Wait()`. This will block the main goroutine until all the goroutines have finished and called 
+    `wg.Done()`.
+
+Here's what this code accomplishes:
+- It performs HTTP requests to the specified websites concurrently, which allows for faster execution when making multiple requests.
+- The `sync.WaitGroup` ensures that the program waits for all requests to complete before exiting. This is important because without it, the program might exit before some 
+   requests are finished.
+
+The code provides a simple example of concurrent HTTP requests using goroutines and `sync.WaitGroup` to synchronize their completion.
+
+Output:
+-------------
+200 status code for https://github.com/
+200 status code for https://google.com/
+200 status code for https://meta.com/
+200 status code for https://www.skillwisegroup.com/
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
