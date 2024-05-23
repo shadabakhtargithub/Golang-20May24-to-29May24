@@ -1,0 +1,123 @@
+*************************************************************************************************************************************************
+					***** Golang-S5.1(Hands-on) Channels in Go Programming ***** 
+*************************************************************************************************************************************************
+// Here's an example of how to create and use a channel in Go:
+
+package main
+
+import (
+    "fmt"
+    "time"
+)
+
+func sendData(ch chan<- int) {
+    for i := 0; i < 5; i++ {
+        ch <- i // Send data to the channel
+        time.Sleep(time.Millisecond * 500)
+    }
+    close(ch) // Close the channel when done
+}
+
+func main() {
+    dataChannel := make(chan int) // Create an integer channel
+
+    // Start a Goroutine to send data to the channel
+    go sendData(dataChannel)
+
+    // Receive data from the channel
+    for value := range dataChannel {
+        fmt.Println("Received:", value)
+    }
+}
+
+In this example, we create an integer channel using make(chan int). The sendData Goroutine sends values to the channel, and the main Goroutine receives and prints those 
+values using a for loop. When the sendData function is finished sending data, it closes the channel using close(ch).
+
+Channels provide a powerful and safe way to handle communication and synchronization between Goroutines. They are commonly used for scenarios such as coordinating 
+concurrent tasks, sharing data between Goroutines, and implementing patterns like worker pools and producer-consumer queues.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+/* Example program for channel in Go programming:
+
+Here's an example program in Go that demonstrates the use of channels for communication between two Goroutines. In this program, one Goroutine sends data to a 
+channel, and another Goroutine receives and processes that data from the same channel. */
+
+package main
+
+import (
+	"fmt"
+	"time"
+)
+
+func sender(ch chan int) {
+	for i := 1; i <= 5; i++ {
+		fmt.Printf("Sending: %d\n", i)
+		ch <- i // Send data to the channel
+		time.Sleep(time.Millisecond * 500)
+	}
+	close(ch) // Close the channel when done
+}
+
+func receiver(ch chan int) {
+	for {
+		data, ok := <-ch // Receive data from the channel
+		if !ok {
+			// Channel is closed, break the loop
+			break
+		}
+		fmt.Printf("Received: %d\n", data)
+	}
+}
+
+func main() {
+	dataChannel := make(chan int) // Create an integer channel
+
+	// Start a Goroutine to send data to the channel
+	go sender(dataChannel)
+
+	// Start a Goroutine to receive and process data from the channel
+	go receiver(dataChannel)
+
+	// Allow some time for Goroutines to finish (not recommended in production)
+	time.Sleep(time.Second * 3)
+}
+
+
+In this program:
+
+We create an integer channel called dataChannel using make(chan int).
+
+The sender function sends integers from 1 to 5 to the dataChannel, with a delay of 500 milliseconds between each send operation.
+
+The receiver function continuously receives and processes data from the dataChannel. It checks if the channel is closed using the comma-ok (ok) idiom to break out of the 
+loop when the channel is closed.
+
+In the main function, we start two Goroutines: one for sending data (go sender(dataChannel)) and another for receiving data (go receiver(dataChannel)).
+
+We also add a time.Sleep at the end of main to allow some time for the Goroutines to complete their work (this is not recommended in production; proper synchronization 
+should be used).
+When you run this program, you'll see that data is sent from the sender Goroutine and received and processed by the receiver Goroutine concurrently. The program 
+demonstrates the basic usage of channels for communication between Goroutines.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+							--------- End --------- 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

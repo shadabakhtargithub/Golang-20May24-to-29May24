@@ -1,0 +1,71 @@
+************************************************************************************************************************************************
+					***** Golang-S12.4.1(Hands-on) Mutex in Golang ***** 
+************************************************************************************************************************************************
+// Mutex in Golang
+
+package main
+
+import (
+	"fmt"
+	"net/http"
+	"sync"
+)
+
+var signals = []string{"test"}
+var wg sync.WaitGroup
+var mut sync.Mutex
+
+func main() {
+	websitelists := []string{
+		"https://www.skillwisegroup.com/",
+		"https://google.com/",
+		"https://github.com/",
+		"https://meta.com/",
+	}
+	for _, web := range websitelists {
+		go getStatusCode(web)
+		wg.Add(1)
+	}
+
+	wg.Wait()
+	fmt.Println(signals)
+}
+
+func getStatusCode(endpoint string) {
+
+	defer wg.Done()
+
+	res, err := http.Get(endpoint)
+
+	if err != nil {
+		fmt.Println("Oops in endpoint")
+
+	} else {
+		mut.lock()
+		signals = append(signals, endpoint)
+		mut.unlock()
+		fmt.Printf("%d status code for %s\n", res.StatusCode, endpoint)
+	}
+}
+
+Description:
+-------------------
+you're using a mutex to protect access to a shared slice named signals in your Go code. The goal is to ensure that concurrent goroutines can safely access and modify the 
+signals slice without causing race conditions. However, there are a couple of issues in your code:
+
+In Go, method names should start with an uppercase letter. So, instead of mut.lock() and mut.unlock(), you should use mut.Lock() and mut.Unlock().
+
+The mut mutex is used to protect the access to the signals slice, which is shared among multiple goroutines. You've correctly used mut.Lock() to acquire the lock before 
+modifying signals and mut.Unlock() to release it when done. This ensures that only one goroutine can modify signals at a time, preventing race conditions
+
+With these changes, the mut.Lock() and mut.Unlock() functions will work as expected, providing mutual exclusion for access to the signals slice while allowing multiple 
+goroutines to perform HTTP requests concurrently
+
+Output:
+-------------
+200 status code for https://github.com/
+200 status code for https://meta.com/
+200 status code for https://www.skillwisegroup.com/
+200 status code for https://google.com/
+[test https://github.com/ https://meta.com/ https://www.skillwisegroup.com/ https://google.com/]
+
