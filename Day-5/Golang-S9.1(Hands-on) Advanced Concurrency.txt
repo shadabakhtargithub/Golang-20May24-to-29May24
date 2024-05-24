@@ -1,0 +1,259 @@
+*************************************************************************************************************************************************
+					***** Golang-S9.1(Hands-on) Advanced Concurrency ***** 
+*************************************************************************************************************************************************
+Question:
+--------------
+Number of threads is associated to the CPU cores, what happens if i have only one core ?
+
+Answer:
+------------
+package main
+
+import (
+    "fmt"
+    "runtime"
+    "time"
+)
+
+func main() {
+    runtime.GOMAXPROCS(1) // Limit the number of OS threads to 1
+
+    go func() {
+        for i := 0; i < 5; i++ {
+            fmt.Println("Goroutine")
+            time.Sleep(100 * time.Millisecond) // Simulate work
+        }
+    }()
+
+    for i := 0; i < 5; i++ {
+        fmt.Println("Main function")
+        time.Sleep(100 * time.Millisecond) // Simulate work
+    }
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Worker Pools-It creates a pool of worker goroutines to handle a fixed number of jobs, using channels for communication between the main function and the workers
+
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+// The worker function receives jobs from the jobs channel, processes them, and sends the results to the results channel
+
+func worker(id int, jobs <-chan int, results chan<- int) {
+	for job := range jobs {
+		fmt.Printf("Worker %d started job %d\n", id, job)
+		// Simulating some work
+		results <- job * 2
+		fmt.Printf("Worker %d finished job %d\n", id, job)
+	}
+}
+
+func main() {
+	numJobs := 5
+	numWorkers := 3
+
+	jobs := make(chan int, numJobs)
+	results := make(chan int, numJobs)
+
+	// Start worker goroutines
+	var wg sync.WaitGroup
+	for w := 1; w <= numWorkers; w++ {
+		wg.Add(1)
+		go func(workerID int) {
+			defer wg.Done()
+			worker(workerID, jobs, results)
+		}(w)
+	}
+
+	// Send jobs to workers
+	for j := 1; j <= numJobs; j++ {
+		jobs <- j
+	}
+	close(jobs)
+
+	// Collect results
+	go func() {
+		wg.Wait()
+		close(results)
+	}()
+
+	// Print results
+	for res := range results {
+		fmt.Println("Result:", res)
+	}
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Fan-out/Fan-in
+
+package main
+
+import (
+	"fmt"
+	"sync"
+)
+
+// Producer Function: Generates numbers and sends them to an output channel
+
+func producer(nums ...int) <-chan int {
+	out := make(chan int)
+	go func() {
+		defer close(out)
+		for _, n := range nums {
+			out <- n
+		}
+	}()
+	return out
+}
+
+// Square Function: Reads integers from an input channel, squares them, and sends the results to an output channel
+
+func square(in <-chan int) <-chan int {
+	out := make(chan int)
+	go func() {
+		defer close(out)
+		for n := range in {
+			out <- n * n
+		}
+	}()
+	return out
+}
+
+// Merge Function: Combines multiple input channels into a single output channel
+
+func merge(channels ...<-chan int) <-chan int {
+	var wg sync.WaitGroup
+	out := make(chan int)
+
+	mergeFunc := func(c <-chan int) {
+		defer wg.Done()
+		for n := range c {
+			out <- n
+		}
+	}
+
+	wg.Add(len(channels))
+	for _, c := range channels {
+		go mergeFunc(c)
+	}
+
+	go func() {
+		wg.Wait()
+		close(out)
+	}()
+
+	return out
+}
+
+// Main Function: Sets up the pipeline and processes the results
+func main() {
+	nums := []int{1, 2, 3, 4, 5}
+
+	// Fan-out
+	in := producer(nums...)
+	out1 := square(in)
+	out2 := square(in)
+
+	// Fan-in
+	result := merge(out1, out2)
+
+	// Consume merged results
+	for res := range result {
+		fmt.Println(res)
+	}
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Contextual Errors and Context Package : How to use the Context package to handle timeouts and context cancellation, along with contextual errors?
+
+package main
+
+import (
+	"context"
+	"fmt"
+	"time"
+)
+
+func doSomething(ctx context.Context) error {
+	select {
+	case <-time.After(time.Second):
+		fmt.Println("Task completed successfully")
+		return nil
+	case <-ctx.Done():
+		return ctx.Err()
+	}
+}
+
+func main() {
+	ctx, cancel := context.WithTimeout(context.Background(), 500*time.Millisecond)
+	defer cancel()
+
+	err := doSomething(ctx)
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
+}
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Working with TCP/UDP Sockets
+
+package main
+
+import (
+	"fmt"
+	"net"
+)
+
+func main() {
+	// TCP Server
+	go func() {
+		listener, err := net.Listen("tcp", ":8080")
+		if err != nil {
+			panic(err)
+		}
+		defer listener.Close()
+
+		for {
+			conn, err := listener.Accept()
+			if err != nil {
+				panic(err)
+			}
+
+			go func(c net.Conn) {
+				defer c.Close()
+				fmt.Fprintln(c, "Hello from TCP server!")
+			}(conn)
+		}
+	}()
+
+	// UDP Server
+	go func() {
+		addr, err := net.ResolveUDPAddr("udp", ":8081")
+		if err != nil {
+			panic(err)
+		}
+
+		conn, err := net.ListenUDP("udp", addr)
+		if err != nil {
+			panic(err)
+		}
+		defer conn.Close()
+
+		for {
+			buf := make([]byte, 1024)
+			n, addr, err := conn.ReadFromUDP(buf)
+			if err != nil {
+				panic(err)
+			}
+
+			fmt.Printf("Received UDP message from %s: %s\n", addr, string(buf[:n]))
+		}
+	}()
+
+	select {}
+}
+*************************************************************************************************************************************************
+							***** END ***** 
+*************************************************************************************************************************************************
