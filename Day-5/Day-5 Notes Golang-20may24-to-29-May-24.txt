@@ -1,0 +1,461 @@
+*************************************************************************************************************************************************
+						***** Notes Golang-20May24-to-29May24 ***** 
+*************************************************************************************************************************************************
+Day-1 | 20-05-2024 | Monday 
+==============================
+Which Golang version you are using ?
+---
+go version go1.21.1 windows/amd64
+
+Powershell:
+----------------
+cd d:
+
+cd <folder>
+
+code .
+
+Installationa and Configuration on Azure Cloud:
+==========================================
+https://azure.microsoft.com/en-in/get-started/azure-portal
+
+Useruser: azureuser
+Key: Private Key
+
+MacOS/Linux
+============
+ssh -i key.pem azureuser@Public-IP-Address/Public-DNS-Name
+
+Port:
+-------
+22
+
+https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+---
+putty.exe : connecting with laptop to cloud VM
+
+puttygen.exe: convert .pem to ppk
+
+pageant.exe: add your key in pageant
+
+Working with Azure Ubuntu VM:
+==============================
+azureuser@Developer1:~$ cat /etc/os-release
+NAME="Ubuntu"
+VERSION="20.04.6 LTS (Focal Fossa)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 20.04.6 LTS"
+VERSION_ID="20.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=focal
+UBUNTU_CODENAME=focal
+
+wget https://go.dev/dl/go1.22.3.linux-amd64.tar.gz 
+
+tar -C /usr/local -xzf go1.22.3.linux-amd64.tar.gz
+
+azureuser@Developer1:~$ sudo tar -C /usr/local -xzf go1.22.3.linux-amd64.tar.gz
+azureuser@Developer1:~$ export GOPATH=$HOME/go
+azureuser@Developer1:~$ export PATH=$PATH:/usr/local/go/bin:$GOPATH/bin
+azureuser@Developer1:~$ ls -a
+.  ..  .bash_logout  .bashrc  .cache  .profile  .ssh  .sudo_as_admin_successful  .wget-hsts  go1.22.3.linux-amd64.tar.gz
+
+
+azureuser@Developer1:~$ go version
+go version go1.22.3 linux/amd64
+
+azureuser@Developer1:~$ ls
+go1.22.3.linux-amd64.tar.gz
+
+azureuser@Developer1:~$ vim hello.go
+
+azureuser@Developer1:~$ ls
+go1.22.3.linux-amd64.tar.gz  hello.go
+
+azureuser@Developer1:~$ go run hello.go
+Welcome to Goazureuser@Developer1:~$
+
+azureuser@Developer1:~$ go build hello.go
+azureuser@Developer1:~$ ls
+go1.22.3.linux-amd64.tar.gz  hello  hello.go
+azureuser@Developer1:~$ ll
+total 69252
+drwxr-xr-x 4 azureuser azureuser     4096 May 20 06:53 ./
+drwxr-xr-x 3 root      root          4096 May 20 06:34 ../
+-rw-r--r-- 1 azureuser azureuser      220 Feb 25  2020 .bash_logout
+-rw-r--r-- 1 azureuser azureuser     3771 Feb 25  2020 .bashrc
+drwx------ 3 azureuser azureuser     4096 May 20 06:53 .cache/
+-rw-r--r-- 1 azureuser azureuser      807 Feb 25  2020 .profile
+drwx------ 2 azureuser azureuser     4096 May 20 06:34 .ssh/
+-rw-r--r-- 1 azureuser azureuser        0 May 20 06:50 .sudo_as_admin_successful
+-rw------- 1 azureuser azureuser      791 May 20 06:53 .viminfo
+-rw-rw-r-- 1 azureuser azureuser      161 May 20 06:47 .wget-hsts
+-rw-rw-r-- 1 azureuser azureuser 68958945 May  7 16:01 go1.22.3.linux-amd64.tar.gz
+-rwxrwxr-x 1 azureuser azureuser  1910598 May 20 06:53 hello*
+-rw-rw-r-- 1 azureuser azureuser       71 May 20 06:53 hello.go
+
+azureuser@Developer1:~$ ls
+
+go1.22.3.linux-amd64.tar.gz  hello  hello.go
+
+azureuser@Developer1:~$ ls -l hello.go
+-rw-rw-r-- 1 azureuser azureuser 71 May 20 06:53 hello.go
+
+azureuser@Developer1:~$ ll hello
+-rwxrwxr-x 1 azureuser azureuser 1910598 May 20 06:53 hello*
+
+
+
+azureuser@Developer1:~$ go help
+Go is a tool for managing Go source code.
+
+Usage:
+
+        go <command> [arguments]
+
+The commands are:
+
+        bug         start a bug report
+        build       compile packages and dependencies
+        clean       remove object files and cached files
+        doc         show documentation for package or symbol
+        env         print Go environment information
+        fix         update packages to use new APIs
+        fmt         gofmt (reformat) package sources
+        generate    generate Go files by processing source
+        get         add dependencies to current module and install them
+        install     compile and install packages and dependencies
+        list        list packages or modules
+        mod         module maintenance
+        work        workspace maintenance
+        run         compile and run Go program
+        test        test packages
+        tool        run specified go tool
+        version     print Go version
+        vet         report likely mistakes in packages
+
+Use "go help <command>" for more information about a command.
+
+Additional help topics:
+
+        buildconstraint build constraints
+        buildmode       build modes
+        c               calling between Go and C
+        cache           build and test caching
+        environment     environment variables
+        filetype        file types
+        go.mod          the go.mod file
+        gopath          GOPATH environment variable
+        goproxy         module proxy protocol
+        importpath      import path syntax
+        modules         modules, module versions, and more
+        module-auth     module authentication using go.sum
+        packages        package lists and patterns
+        private         configuration for downloading non-public code
+        testflag        testing flags
+        testfunc        testing functions
+        vcs             controlling version control with GOVCS
+
+Use "go help <topic>" for more information about that topic.
+
+*************************************************************************************************************************************************
+Day-2 | 21-05-2024 | Tuesday
+==========================
+https://go.dev/
+
+About the Playground
+===================
+
+The Go Playground is a web service that runs on go.dev's servers. The service receives a Go program, vets, compiles, links, and runs the program inside a sandbox, then
+ returns the output.
+
+If the program contains tests or examples and no main function, the service runs the tests. Benchmarks will likely not be supported since the program runs in a sandboxed 
+environment with limited resources.
+
+There are limitations to the programs that can be run in the playground:
+
+The playground can use most of the standard library, with some exceptions. The only communication a playground program has to the outside world is by writing to 
+standard output and standard error.
+
+In the playground the time begins at 2009-11-10 23:00:00 UTC (determining the significance of this date is an exercise for the reader). This makes it easier to cache programs 
+by giving them deterministic output.
+
+There are also limits on execution time and on CPU and memory usage.
+
+The article "Inside the Go Playground" describes how the playground is implemented. The source code is available at https://go.googlesource.com/playground.
+
+The playground uses the latest stable release of Go.
+
+The playground service is used by more than just the official Go project (Go by Example is one other instance) and we are happy for you to use it on your own site. 
+All we ask is that you contact us first (note this is a public mailing list), that you use a unique user agent in your requests (so we can identify you), and that your service is 
+of benefit to the Go community.
+
+Any requests for content removal should be directed to security@golang.org. Please include the URL and the reason for the request.
+
+Reference:
+----------------
+chmod --> file and directory
+chown --> ownership 
+
+https://pkg.go.dev/os#example-Chmod
+
+File Permission:
+===============
+0644
+
+r --> 4
+w --> 2
+x --> 1
+
+U --> User/Owner
+G --> Group
+O --> Ohters
+
+chmod
+----------
+file(s)/directory
+
+chown for ownership
+
+Example:
+-------------
+chmod 777 example.txt
+chmod 766 file1.txt
+chmod -R 777 dir
+
+chown azure:azure dir2
+
+chown admin:admin dir2
+
+Example Azure RHEL:
+====================
+[azureuser@Developer1 ~]$ ll package_dir1/
+total 4
+-rw-rw-r--. 1 azureuser azureuser 606 May 21 06:58 1_file.go
+
+drwxrwxr-x. 2 azureuser azureuser       23 May 21 06:58 package_dir1
+
+[azureuser@Developer1 package_dir1]$ cat /etc/os-release
+NAME="Red Hat Enterprise Linux"
+VERSION="8.7 (Ootpa)"
+
+Create User:
+============
+sudo adduser user1
+
+Create Password for User:
+=======================
+$ sudo passwd dev2
+
+$ sudo chown -R azureuser:azureuser package_dir1
+
+Make:
+=======
+https://pkg.go.dev/builtin#make
+
+
+*************************************************************************************************************************************************
+Day-3 | 21-05-2024 | Tuesday
+==========================
+
+*************************************************************************************************************************************************
+Day-4 | 22-05-2024 | Thursday
+===========================
+Solution-1
+----------------
+How to use method for multiple structs ?
+---
+Using go interface
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Solution2:
+----------------
+_ := p.Option
+ 
+if _ != nil {
+panic("Value not found")
+}
+ 
+
+_ := p.Option     if _ != nil {  panic("Value not found")  }     try this
+
+not works..  
+
+ 
+    _ := p.Options
+    if _ != nil {
+        panic("Value not found")
+    }
+got this error.  cannot use _ as value or type
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Solution-3
+==========
+// JSON Serialization and Deserialization
+
+// This program demonstrates how to serialize a Go structure to JSON and deserialize it back.
+
+   package main
+
+   import (
+       "encoding/json"
+       "fmt"
+   )
+
+   // Define a structure 'Person'
+   type Person struct {
+       FirstName string `json:"first_name"`
+       LastName  string `json:"last_name"`
+       Age       int    `json:"age"`
+   }
+
+   func main() {
+       // Create an instance of 'Person'
+       p := Person{
+           FirstName: "Alice",
+           LastName:  "Smith",
+           Age:       28,
+       }
+
+       // Serialize 'Person' to JSON
+       jsonData, err := json.Marshal(p)
+       if err != nil {
+           fmt.Println("JSON serialization error:", err)
+           return
+       }
+       fmt.Println("Serialization of Data:", jsonData)
+
+       // Deserialize JSON back to 'Person'
+       var newPerson Person
+       err = json.Unmarshal(jsonData, &newPerson)
+       if err != nil {
+           fmt.Println("JSON deserialization error:", err)
+           return
+       }
+
+       // Print the deserialized 'Person'
+       fmt.Println("Deserialized Person:")
+       fmt.Println("First Name:", newPerson.FirstName)
+       fmt.Println("Last Name:", newPerson.LastName)
+       fmt.Println("Age:", newPerson.Age)
+   }
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Q:
+---
+Number of threads is associated to the CPU cores, what happens if i have only one core ?
+
+Issue:
+---------
+PS D:\Skillwise-2024\go-exercise-file-2024\Concurreny> go run .\5_withMutex.go
+Oops in endpoint
+200 status code for https://github.com/
+fatal error: all goroutines are asleep - deadlock!
+
+goroutine 1 [semacquire]:
+sync.runtime_Semacquire(0xc0000080f0?)
+        C:/Program Files/Go/src/runtime/sema.go:62 +0x25
+sync.(*WaitGroup).Wait(0x21373f1ae28?)
+        C:/Program Files/Go/src/sync/waitgroup.go:116 +0x48
+main.main()
+        D:/Skillwise-2024/go-exercise-file-2024/Concurreny/5_withMutex.go:27 +0x135
+
+goroutine 7 [sync.Mutex.Lock]:
+sync.runtime_SemacquireMutex(0x803400?, 0x40?, 0x5f83b4?)
+        C:/Program Files/Go/src/runtime/sema.go:77 +0x25
+sync.(*Mutex).lockSlow(0x889680)
+        C:/Program Files/Go/src/sync/mutex.go:171 +0x15d
+sync.(*Mutex).Lock(...)
+        C:/Program Files/Go/src/sync/mutex.go:90
+main.getStatusCode({0x5fc6f1, 0x13})
+        D:/Skillwise-2024/go-exercise-file-2024/Concurreny/5_withMutex.go:41 +0xc5 
+created by main.main in goroutine 1
+        D:/Skillwise-2024/go-exercise-file-2024/Concurreny/5_withMutex.go:23 +0xa5 
+
+goroutine 9 [sync.Mutex.Lock]:
+sync.runtime_SemacquireMutex(0x803400?, 0xc0?, 0x5f83b4?)
+        C:/Program Files/Go/src/runtime/sema.go:77 +0x25
+sync.(*Mutex).lockSlow(0x889680)
+        C:/Program Files/Go/src/sync/mutex.go:171 +0x15d
+sync.(*Mutex).Lock(...)
+        C:/Program Files/Go/src/sync/mutex.go:90
+main.getStatusCode({0x5fbb2e, 0x11})
+        D:/Skillwise-2024/go-exercise-file-2024/Concurreny/5_withMutex.go:41 +0xc5
+created by main.main in goroutine 1
+        D:/Skillwise-2024/go-exercise-file-2024/Concurreny/5_withMutex.go:23 +0xa5
+exit status 2
+
+Marshal Issue:
+---------------------
+type ChannelHolder struct {
+    Ch chan int `json:"ch"`
+}
+ 
+func main() {
+    chHolder := ChannelHolder{Ch: make(chan int)}
+    _, err := json.Marshal(chHolder)
+    if err != nil {
+        fmt.Println("Error:", err)
+    }
+}
+
+*************************************************************************************************************************************************
+Day-5 | 24-05-2024 | Friday
+=========================
+Question:
+--------------
+Number of threads is associated to the CPU cores, what happens if i have only one core ?
+
+Answer:
+------------
+package main
+
+import (
+    "fmt"
+    "runtime"
+    "time"
+)
+
+func main() {
+    runtime.GOMAXPROCS(1) // Limit the number of OS threads to 1
+
+    go func() {
+        for i := 0; i < 5; i++ {
+            fmt.Println("Goroutine")
+            time.Sleep(100 * time.Millisecond) // Simulate work
+        }
+    }()
+
+    for i := 0; i < 5; i++ {
+        fmt.Println("Main function")
+        time.Sleep(100 * time.Millisecond) // Simulate work
+    }
+}
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
